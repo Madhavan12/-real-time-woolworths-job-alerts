@@ -1,0 +1,88 @@
+✅ Goal: Run the script continuously on your EC2 (Amazon Linux) using systemd
+🔁 STEP-BY-STEP GUIDE
+✅ Step 1: Upload your script to the EC2 instance
+If you're using the EC2 browser terminal, you can:
+
+Use the “File transfer” tab to upload your file (e.g., job_notifier.py)
+OR
+
+Just create it manually in the EC2 terminal:
+
+bash
+Copy
+Edit
+nano job_notifier.py
+# Paste your code here, then press Ctrl+O, Enter, then Ctrl+X to save and exit
+✅ Step 2: Install Python + dependencies (if not already)
+bash
+Copy
+Edit
+sudo yum update -y
+sudo yum install python3 -y
+pip3 install --user requests beautifulsoup4
+If pip3 is not found, install it:
+
+bash
+Copy
+Edit
+sudo yum install python3-pip -y
+✅ Step 3: Test the script once manually
+bash
+Copy
+Edit
+python3 job_notifier.py
+Make sure it starts running without errors (you should see “🟢 Job notifier started successfully.”). If everything works, press Ctrl+C to stop it.
+
+✅ Step 4: Set up as a systemd service (for always-on)
+Create a new service file:
+
+bash
+Copy
+Edit
+sudo nano /etc/systemd/system/jobnotifier.service
+Paste this (customized for your setup):
+
+ini
+Copy
+Edit
+[Unit]
+Description=Telegram Job Notifier Bot
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/ec2-user/job_notifier.py
+WorkingDirectory=/home/ec2-user
+StandardOutput=append:/home/ec2-user/output.log
+StandardError=append:/home/ec2-user/error.log
+Restart=always
+User=ec2-user
+
+[Install]
+WantedBy=multi-user.target
+⚠️ Make sure the script path and Python path are correct. You can confirm Python path using:
+
+bash
+Copy
+Edit
+which python3
+✅ Step 5: Reload and start the service
+bash
+Copy
+Edit
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable jobnotifier.service
+sudo systemctl start jobnotifier.service
+✅ Step 6: Confirm it’s running
+bash
+Copy
+Edit
+sudo systemctl status jobnotifier.service
+Look for Active: active (running) ✅
+
+✅ Step 7: View logs
+bash
+Copy
+Edit
+tail -f /home/ec2-user/output.log
+(You can also view error.log for exceptions)

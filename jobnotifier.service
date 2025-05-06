@@ -1,0 +1,14 @@
+[Unit]
+Description=Telegram Job Notifier Bot
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/ec2-user/job_notifier.py
+WorkingDirectory=/home/ec2-user
+StandardOutput=append:/home/ec2-user/output.log
+StandardError=append:/home/ec2-user/error.log
+Restart=always
+User=ec2-user
+
+[Install]
+WantedBy=multi-user.target
