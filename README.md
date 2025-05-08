@@ -1,35 +1,27 @@
-# Real-Time Woolworths Job Alerts
+# 🔔 Real-Time Job Alerts – Woolworths & ALDI via Telegram
 
-This Python script scrapes job postings from Woolworths' careers page and sends real-time job alerts to your Telegram account.
+This Python-based Telegram bot continuously monitors job listings from Woolworths and ALDI career portals, filters out duplicates using `.json` trackers, and sends real-time alerts to multiple users via Telegram.
 
-## Requirements
+---
+
+## 🧰 Features
+
+- ✅ Scrapes jobs from both Woolworths and ALDI
+- ✅ Sends personalized Telegram alerts (name, location, radius)
+- ✅ JSON-based job tracking to avoid duplicate alerts
+- ✅ Runs continuously on EC2 using `systemd`
+- ✅ Simple config with multiple users and locations
+
+---
+
+## ⚙️ Requirements
+
 - Python 3.x
-- requests
-- BeautifulSoup
-- python-telegram-bot
+- `requests`
+- `beautifulsoup4`
+- Telegram bot token (via BotFather)
 
-## Installation
+To install:
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your-username/real-time-woolworths-job-alerts.git
-    ```
-
-2. Navigate to the project directory:
-    ```bash
-    cd real-time-woolworths-job-alerts
-    ```
-
-3. Install the required dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## How to Use
-
-1. Set up a Telegram Bot using BotFather and get the `BOT_API_KEY` and `CHAT_ID`.
-2. Add your credentials to the `job_alerts.py` script.
-3. Run the script:
-    ```bash
-    python job_alerts.py
-    ```
+```bash
+pip install --user requests beautifulsoup4
